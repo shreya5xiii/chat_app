@@ -1,0 +1,51 @@
+body{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(rgb(207, 160, 252),rgb(235, 149, 176));
+    background-attachment: fixed;
+    font-size:1em;
+    letter-spacing: 0.1px;
+    color:black;
+    text-rendering: optimizeLegibility;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+/* for background image */
+.background-container {
+    background-image: url(assets/background.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Adjust as needed */
+   
+  }
+  .card1{
+    background-color: rgba(255, 255, 252,0.4);
+  }
+  .chats{
+max-height: 450px;
+overflow-y: auto;
+  }
+  .chat-bubble-container{
+list-style: none;
+  }
+  .chat-bubble {
+max-width: 450px;
+padding: 15px;
+margin: 5px;
+
+border-radius: 15px;
+text-align: left;
+  }
+  .to-message{
+    border-bottom-left-radius: 0;
+    background-color: rgb(207, 160, 252);
+    position: relative;
+  }
+  
+  .from-message{
+    border-bottom-right-radius: 0;
+    background-color: rgb(232, 150, 219);
+    right: -50px !important;
+    position: relative;
+  }
