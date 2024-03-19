@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Index page</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+<script>try{Typekit.load({async:true});}catch(e){}</script>  
+
+</head>
+<body>
+  <!-- for image -->
+  <!-- <div class="container-fluid background-container">   -->
+    <div class="container" >
+      <div class="row justify-content-center"  >
+        <div class="card card1"  style="width: 600px; " >
+           <div class="card-header">Login</div>
+           <div class="card-body">
+              <form>
+                 <div class="form-group row mt-2 ">
+                  <label for="email" class="col-md-4 text-md-right">Email</label>
+                 <div class="col-md-8">
+                  <input id="email" type="text" class="form-control" name="email" placeholder="Enter email" autofocus>
+                <span clas="text-danger" id="emailErr"></span>
+                </div>
+                 </div>
+                 <div class="form-group row mt-2 ">
+                  <label for="password" class="col-md-4 text-md-right">Password</label>
+                 <div class="col-md-8">
+                  <input id="password" type="password" class="form-control" name="password" placeholder="Enter password" >
+                <span clas="text-danger" id="passwordErr"></span>
+                </div>
+                 </div>
+
+                 <div class="form-group row mt-2 ">
+                   <div class="col-md-8">
+                    <div class="checkbox">
+                      <label>
+                  <input  type="checkbox"name="remember" > Remember me
+                    </label>
+                </div>
+              </div>
+            </div>
+
+                 <div class="form-group row mt-2 ">
+                  <div class="col-md-4"></div>
+                    <div class="col-md-8">
+                  <button type="button" class="btn btn-primary" id="authenticateUser" style="width: 150px;">
+                    Login
+                  </button>
+                  <p class="text-black mt-2 mb-2">I do not have an Account <a href="signup.html" style="text-decoration: none;">Sign Up</a></p>
+                  </div>
+                </div>
+
+              </form>
+           </div>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="validation.js"></script>
+   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth,signInWithEmailAndPassword}  from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyC2y4lFEHveSV2g9LieClYMPzT59vIupTg",
+      authDomain: "simplechatapp-c8367.firebaseapp.com",
+      databaseURL: "https://simplechatapp-c8367-default-rtdb.firebaseio.com",
+      projectId: "simplechatapp-c8367",
+      storageBucket: "simplechatapp-c8367.appspot.com",
+      messagingSenderId: "105628893480",
+      appId: "1:105628893480:web:c65898f5d32bc40b87901d",
+      measurementId: "G-THBWK11J1B"
+    };
+    const app = initializeApp(firebaseConfig);
+    function authenticateFromFirebase() {
+    if (validateLoginInputCredentials()) {
+      var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+       
+        const auth = getAuth(app);
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredentials) => {
+                const user = userCredentials.user;
+               localStorage.setItem('loggedin_user_id',user.uid)
+               localStorage.setItem('loggedin_user_email',user.email)
+               setTimeout(location.href="start_chat.html",2000)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error("Firebase Authentication Error:", errorCode, errorMessage);
+                // Handle specific errors or display a general error message to the user
+            });
+    }
+}
+
+$("#authenticateUser").on('click',function(){
+      // alert("going");
+      authenticateFromFirebase(); 
+    })
+
+
+
+  </script>
+  
+</body>
+
+</html>
